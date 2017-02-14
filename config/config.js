@@ -12,8 +12,8 @@ module.exports =  {
     staging : function()
     {
         return {
-            "host" : "ds151707.mlab.com",
-            "port" : "51707",
+            "host" : "ds151909.mlab.com",
+            "port" : "51909",
             "database" : "play-db",
             "username" : "play",
             "password" : "play"
@@ -22,8 +22,8 @@ module.exports =  {
     prod : function()
     {
         return {
-            "host" : "ds151707.mlab.com",
-            "port" : "51707",
+            "host" : "ds151909.mlab.com",
+            "port" : "51909",
             "database" : "play-devs-prod",
             "username" : "play",
             "password" : "play"

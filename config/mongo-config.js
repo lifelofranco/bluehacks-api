@@ -10,12 +10,12 @@ module.exports = function(mongoose, config, port)
 
 
               // For Staging DB:
-              // 'mongodb://'+ config.staging().username + ":" + config.staging().password + "@" + config.staging().host +
-              // ":" + config.staging().port + "/" + config.staging().database;
+              'mongodb://'+ config.staging().username + ":" + config.staging().password + "@" + config.staging().host +
+              ":" + config.staging().port + "/" + config.staging().database;
 
               // For Local DB:
-              'mongodb://'+ config.local().host +
-              ":" + config.local().port + "/" + config.local().database;
+              // 'mongodb://'+ config.local().host +
+              // ":" + config.local().port + "/" + config.local().database;
 
 
     console.log(url);
