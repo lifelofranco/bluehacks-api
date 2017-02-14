@@ -15,7 +15,7 @@ module.exports =  {
             "host" : "ds151909.mlab.com",
             "port" : "51909",
             "database" : "play-db",
-            "username" : "play",
+            "username" : "play-dev",
             "password" : "play"
         }
     },
