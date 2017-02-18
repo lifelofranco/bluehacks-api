@@ -6,15 +6,16 @@ module.exports = function(mongoose)
 
     var UserSchema = new mongoose.Schema({
         _id: mongoose.Schema.ObjectId,
-        accountType: Number,
-        verified: Boolean,
         firstName: String,
+        middleName: String,
         lastName: String,
         password: String,
         email: String,
-        classes: [],
-        tickets: [],
-        createdAt: { type: Date, default: Date.now },
+        birthday: { type: Date },
+        photo: String,
+        phone: String,
+        applications: []
+//        createdAt: { type: Date, default: Date.now },
     });
 
     return module.exports = mongoose.model('users', UserSchema);

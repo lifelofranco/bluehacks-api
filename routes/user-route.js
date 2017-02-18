@@ -14,6 +14,7 @@ module.exports = function(app, router, db, constants) {
     // For local login
     router.get('/' + constants.user_prefix, function (req, res) {
         console.log('GET: /api/v1/users');
+        console.log('Body : ' + req.body);
 
         User.find(function (err, users) {
             return res.json(users);
@@ -118,6 +119,24 @@ module.exports = function(app, router, db, constants) {
           }
 
       });
+    });
+
+    // updating user
+    router.post('/' + constants.user_prefix + '/' + constants.edit_prefix, function(req,res) {
+      console.log('POST: /api/v1/users/edit');
+      console.log('POST: /api/v1/users/edit - req.body = ', req.body);
+
+      var id = req.body.userId;
+      console.log('Request body: ' + req.body.userId);
+      User.update({_id: req.body.userId}, {$set: req.body}, function(err, user){
+        if(err){
+            console.log('POST: /api/v1/user/edit - ERROR = ', err);
+            return res.status(500).json({message : "Editing not successful... ERROR: " + err });
+        } else {
+            return res.json({message: "Updating of User successful!"});
+        }
+      });
+
     });
 
     // For confirming user
