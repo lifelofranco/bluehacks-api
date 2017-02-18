@@ -40,7 +40,7 @@ module.exports = function(app, router, db, constants) {
       scholarship.description = req.body.description;
       scholarship.requirements = req.body.description;
       scholarship.files = req.body.description;
-      scholarship.applications = req.body.applications;
+      // scholarship.applications = req.body.applications;
       
 
       Scholarships.create(scholarship, function(err, createdClass){
@@ -49,7 +49,7 @@ module.exports = function(app, router, db, constants) {
                 console.log(err);
                 return res.json({ status_code: 500, message : err });
             } else {
-                return res.json({ message : 'Mentor Registered!' });
+                return res.json({ message : 'Scholarship Registered!' });
             }
       });
 

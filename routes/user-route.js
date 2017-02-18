@@ -48,6 +48,7 @@ module.exports = function(app, router, db, constants) {
                   if (valid) {
                       console.log("Login POST - Validity function - User Validated");
 
+                      delete user.applications;
                       var token = generateToken(user);
                       res.json({
                           message: "User now Logged In!",

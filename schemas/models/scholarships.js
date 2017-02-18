@@ -6,6 +6,7 @@ module.exports = function(mongoose)
         institution: String,
         logo: String,
         description: String,
+        deadline: {type: Date},
         requirements: [],
         files: [],
         application: []

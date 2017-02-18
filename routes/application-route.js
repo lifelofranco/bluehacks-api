@@ -8,6 +8,7 @@ module.exports = function(app, router, db, constants) {
     var mongoose = require('mongoose');
     var bcrypt = require('bcrypt-nodejs');
     var jwt = require('jsonwebtoken');
+    var _ = require('lodash');
 
     var excludedFields = {
         password: 0
@@ -22,13 +23,97 @@ module.exports = function(app, router, db, constants) {
         });
     });
 
-    router.post('/' + constants.app_prefix + '/my', function (req, res) {
-        console.log('GET: /api/v1/application/');
+// router.post('/' + constants.app_prefix + '/' + constants.create_prefix, function(req,res) {
+//       console.log('POST: /api/v1/application/create');
 
-        AppClass.find({'userId': req.body.userId},function (err, fetchedClass) {
-            return res.json(fetchedClass);
-        });
-    });
+//       var app = new AppClass();
+
+//       User.findOne({_id:req.body.userId}, function(err, user){
+//           if(user){
+
+//             app._id = mongoose.Types.ObjectId();
+//             app.scholarshipId = req.body.scholarshipId;
+//             app.scholarship = Scholarship.findOne({_id:app.scholarshipId});
+//             app.reservation = req.body.reservation;
+
+//             user.scholarships.push(app.scholarshipId);
+//             AppClass.create(app, function(err, createdClass){
+//                 if(err) {
+//                     console.log('Register POST - Did not create booking');
+//                     console.log(err);
+//                     return res.status(500).json({message : err });
+//                 } else {
+//           //           user.scholarships.push(app.scholarship);
+//           //           user.save(function(err){
+//           //               if (err) {
+//           //                 console.log('Register POST saving tickets to user - unsuccessful');
+//           //                 console.log(err);
+//           //                 return res.status(500).json({message : err });
+//           //               } else {
+//                           // console.log("selectedClass",selectedClass);
+//                           // console.log("User Updated! User:", user);
+//                           return res.json({ message : 'Booking Registered!' });
+//           //               }
+//           //           });
+//                 }
+//           //   });
+//           // } else {
+//           //   res.status(500).json({message: "No user found."});
+//           });
+//           }
+//       });
+
+
+
+//     });
+
+
+    router.post('/' + constants.app_prefix + '/' + constants.create_prefix, function (req, res) {
+        console.log('POST: /api/v1/application/create');
+
+        // AppClass.find({'userId': req.body.userId},function (err, appsClass) {
+
+        User.findOne({'_id': req.body.userId}, function(err, userClass){
+
+            // _.each(appsClass, function(eachApp){
+              
+          Scholarship.findOne({'_id':req.body.scholarshipId}, function(err, scholarshipClass){
+
+            var scholarshipInfo ={
+                name: scholarshipClass.name,
+                institution: scholarshipClass.institution,
+                logo: scholarshipClass.logo,
+                description: scholarshipClass.description,
+                requirements: scholarshipClass.requirements,
+                files: scholarshipClass.files,
+            };
+
+            var appFinal = {
+              status: req.body.status,
+              scholarship: scholarshipInfo
+            }
+            
+            userClass.applications.push(appFinal);
+            userClass.save(function(err){
+              if (err) {
+                      console.log('Register POST saving applications to user - unsuccessful');
+                      console.log(err);
+                      return res.status(500).json({message : err });
+                    } else {
+                      // console.log("User Updated! User:", user);
+                      return res.json({ message : 'Application Registered!' });
+                    }
+            });
+            // return res.json(userClass.applications);                    
+
+          });
+              
+      });
+  });
+
+            // return res.json(fetchedClass);
+        // });
+    // });
 
     // For creating applicaition
     router.post('/' + constants.app_prefix + '/' + constants.create_prefix, function(req,res) {
