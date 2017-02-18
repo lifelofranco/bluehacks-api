@@ -8,8 +8,11 @@ var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '500mb', extended: true, parameterLimit:50000}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -42,5 +45,6 @@ require('./routes/user-route')(app, router, db, constants);
 require('./routes/class-route')(app, router, db, constants);
 require('./routes/mentor-route')(app, router, db, constants);
 require('./routes/booking-route')(app, router, db, constants);
+require('./routes/files-route')(app, router, db, constants);
 
 module.exports = app;
