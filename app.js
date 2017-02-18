@@ -15,10 +15,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public'));
+//app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
 
 //Load the constants
 var constants = require('./utils/constants');
