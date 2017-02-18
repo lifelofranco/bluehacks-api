@@ -8,5 +8,6 @@ var constants = module.exports =  {
   edit_prefix: "edit",
   scholarship_prefix: "scholarships",
   mentor_prefix: "mentor",
+  forms_uri: "forms",
   SECRET_CODE: "S3cr3T"
 };
