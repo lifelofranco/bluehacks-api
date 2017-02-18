@@ -40,11 +40,10 @@ app.listen(port, '0.0.0.0', function() {
     console.log('Server running at port ' + port);
 });
 
+
 //Load all services here
 require('./routes/user-route')(app, router, db, constants);
-require('./routes/class-route')(app, router, db, constants);
-require('./routes/mentor-route')(app, router, db, constants);
-require('./routes/booking-route')(app, router, db, constants);
-require('./routes/files-route')(app, router, db, constants);
+require('./routes/scholarship-route')(app, router, db, constants);
+require('./routes/application-route')(app, router, db, constants);
 
 module.exports = app;
