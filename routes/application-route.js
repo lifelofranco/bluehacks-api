@@ -30,6 +30,14 @@ module.exports = function(app, router, db, constants) {
         });
     });
 
+    router.get('/' + constants.app_prefix + '/:id', function (req, res) {
+        console.log('GET: /api/v1/application/:id');
+
+        AppClass.findOne({_id: req.params.id},function (err, fetchedClass) {
+            return res.json(fetchedClass);
+        });
+    });
+
 // router.post('/' + constants.app_prefix + '/' + constants.create_prefix, function(req,res) {
 //       console.log('POST: /api/v1/application/create');
 
@@ -100,6 +108,7 @@ module.exports = function(app, router, db, constants) {
 
             var scholarshipInfo ={
               name: scholarshipClass.name,
+              scholarshipId: appClass.scholarshipId,
               institution: scholarshipClass.institution,
               logo: scholarshipClass.logo,
               description: scholarshipClass.description,
