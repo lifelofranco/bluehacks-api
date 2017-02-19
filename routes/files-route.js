@@ -15,7 +15,7 @@ module.exports = function(app, router, db, constants) {
         console.log("POST: " + '/api/v1/' + constants.forms_uri + '/upload');
           if (req.body.content) {
             var content = decodeBase64Image(req.body.content);
-/*            FileOutputStream fos = new FileOutputStream("http://localhost:8180/forms");
+/*            FileOutputStream fos = new FileOutputStream("https://playtest-api.herokuapp.com/forms");
             fos.write(Base64.decode(req.body.content, Base64.NO_WRAP));
             fos.close();*/
 
