@@ -93,8 +93,8 @@ module.exports = function(app, router, db, constants) {
                 description: scholarshipClass.description,
                 requirements: scholarshipClass.requirements,
                 files: scholarshipClass.files,
-                deadline: scholarshipClass.deadline,
-                status: scholarshipClass.status
+                deadline: scholarshipClass.deadline
+                // status: scholarshipClass.status
             };
 
             var appFinal = {
