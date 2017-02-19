@@ -83,7 +83,7 @@ module.exports = function(app, router, db, constants) {
         User.findOne({'_id': req.body.userId}, function(err, userClass){
 
             // _.each(appsClass, function(eachApp){
-              
+
           Scholarship.findOne({'_id':req.body.scholarshipId}, function(err, scholarshipClass){
 
             var scholarshipInfo ={
@@ -101,7 +101,7 @@ module.exports = function(app, router, db, constants) {
               status: req.body.status,
               scholarship: scholarshipInfo
             }
-            
+
             userClass.applications.push(appFinal);
             userClass.save(function(err){
               if (err) {
@@ -113,10 +113,10 @@ module.exports = function(app, router, db, constants) {
                       return res.json({ message : 'Application Registered!' });
                     }
             });
-            // return res.json(userClass.applications);                    
+            // return res.json(userClass.applications);
 
           });
-              
+
       });
   });
 
