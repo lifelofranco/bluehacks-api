@@ -47,5 +47,6 @@ app.listen(port, '0.0.0.0', function() {
 require('./routes/user-route')(app, router, db, constants);
 require('./routes/scholarship-route')(app, router, db, constants);
 require('./routes/application-route')(app, router, db, constants);
+require('./routes/files-route')(app, router, db, constants);
 
 module.exports = app;

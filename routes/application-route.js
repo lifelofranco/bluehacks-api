@@ -94,7 +94,7 @@ module.exports = function(app, router, db, constants) {
                 requirements: scholarshipClass.requirements,
                 files: scholarshipClass.files,
                 deadline: scholarshipClass.deadline,
-                status: scholarshipClass.status
+                status: "Pending"
             };
 
             var appFinal = {
