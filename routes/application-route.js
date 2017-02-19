@@ -85,36 +85,49 @@ module.exports = function(app, router, db, constants) {
             // _.each(appsClass, function(eachApp){
 
           Scholarship.findOne({'_id':req.body.scholarshipId}, function(err, scholarshipClass){
+            
+            var app = new AppClass();
+            app._id = mongoose.Types.ObjectId();
+            app.scholarshipId = req.body.scholarshipId;
+            app.userId = req.body.userId;
+
+            AppClass.create(app, function(err, appClass){
+          if(err) {
+              console.log('Register POST - Did not create class');
+              console.log(err);
+              return res.json({ status_code: 500, message : err });
+          } else {
 
             var scholarshipInfo ={
-                name: scholarshipClass.name,
-                institution: scholarshipClass.institution,
-                logo: scholarshipClass.logo,
-                description: scholarshipClass.description,
-                requirements: scholarshipClass.requirements,
-                files: scholarshipClass.files,
-                deadline: scholarshipClass.deadline,
-                status: scholarshipClass.status
+              name: scholarshipClass.name,
+              institution: scholarshipClass.institution,
+              logo: scholarshipClass.logo,
+              description: scholarshipClass.description,
+              requirements: scholarshipClass.requirements,
+              files: scholarshipClass.files,
+              deadline: scholarshipClass.deadline
             };
 
             var appFinal = {
-              status: req.body.status,
+              status: appClass.status,
               scholarship: scholarshipInfo
-            }
+            };
 
             userClass.applications.push(appFinal);
             userClass.save(function(err){
-              if (err) {
-                      console.log('Register POST saving applications to user - unsuccessful');
-                      console.log(err);
-                      return res.status(500).json({message : err });
-                    } else {
-                      // console.log("User Updated! User:", user);
-                      return res.json({ message : 'Application Registered!' });
-                    }
+                if (err) {
+                  console.log('Register POST saving applications to user - unsuccessful');
+                  console.log(err);
+                  return res.status(500).json({message : err });
+                } else {
+                  // console.log("User Updated! User:", user);
+                  return res.json({ message : 'Application Registered!' });
+                }
             });
             // return res.json(userClass.applications);
 
+                  }
+            });
           });
 
       });
