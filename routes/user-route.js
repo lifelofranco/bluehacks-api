@@ -21,6 +21,18 @@ module.exports = function(app, router, db, constants) {
         });
     });
 
+    router.get('/' + constants.user_prefix + '/:id', function (req, res) {
+      console.log('GET: /api/v1/users/:id');
+
+      if (!req.params.id) {
+          res.status(500).json({message: "No params provided."});
+      }
+
+      User.findOne({_id: req.params.id},function (err, user) {
+          return res.json(user);
+      });
+  });
+
     // For local login
     router.post('/' + constants.user_prefix + '/login', function(req,res) {
       console.log('POST: /api/v1/users/login');
