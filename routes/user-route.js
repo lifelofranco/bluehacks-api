@@ -21,6 +21,14 @@ module.exports = function(app, router, db, constants) {
         });
     });
 
+    router.get('/' + constants.user_prefix + '/:id', function (req, res) {
+        console.log('GET: /api/v1/user/:id');
+
+        User.findOne({_id: req.params.id},function (err, fetchedClass) {
+            return res.json(fetchedClass);
+        });
+    });
+
     // For local login
     router.post('/' + constants.user_prefix + '/login', function(req,res) {
       console.log('POST: /api/v1/users/login');

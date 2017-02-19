@@ -22,6 +22,13 @@ module.exports = function(app, router, db, constants) {
             return res.json(application);
         });
     });
+    router.get('/' + constants.app_prefix + '/:id', function (req, res) {
+        console.log('GET: /api/v1/application/:id');
+
+        AppClass.findOne({_id: req.params.id},function (err, fetchedClass) {
+            return res.json(fetchedClass);
+        });
+    });
 
 // router.post('/' + constants.app_prefix + '/' + constants.create_prefix, function(req,res) {
 //       console.log('POST: /api/v1/application/create');
@@ -86,6 +93,8 @@ module.exports = function(app, router, db, constants) {
                 description: scholarshipClass.description,
                 requirements: scholarshipClass.requirements,
                 files: scholarshipClass.files,
+                deadline: scholarshipClass.deadline,
+                status: scholarshipClass.status
             };
 
             var appFinal = {
@@ -116,57 +125,57 @@ module.exports = function(app, router, db, constants) {
     // });
 
     // For creating applicaition
-    router.post('/' + constants.app_prefix + '/' + constants.create_prefix, function(req,res) {
-      console.log('POST: /api/v1/application/create');
+    // router.post('/' + constants.app_prefix + '/' + constants.create_prefix, function(req,res) {
+    //   console.log('POST: /api/v1/application/create');
 
-      AppClass.findOne({ 'scholarshipId' : req.body.scholarshipId, 'userId': req.body.userId }, function(err, foundClass) {
+    //   AppClass.findOne({ 'scholarshipId' : req.body.scholarshipId, 'userId': req.body.userId }, function(err, foundClass) {
 
-          if (foundClass) {
-              console.log('POST: /api/v1/users/register - found class ' + foundClass);
-              return res.json({ status_code: 500, message : "Application Already Existing." });
-          } else {
-            newApp = new AppClass();
+    //       if (foundClass) {
+    //           console.log('POST: /api/v1/users/register - found class ' + foundClass);
+    //           return res.json({ status_code: 500, message : "Application Already Existing." });
+    //       } else {
+    //         newApp = new AppClass();
 
-            newApp._id = mongoose.Types.ObjectId();
-            newApp.scholarshipId = req.body.scholarshipId;
-            newApp.userId = req.body.userId;
-            newApp.appliedAt = req.body.appliedAt;
-
-
-            // User.findOne({_id: userId}).populate('applications').exec(function(err, applications) {
-            //   applications.push(newApp);
-            // });
-
-            // Scholarship.findOne({_id: newApp.scholarshipId}).populate('applications').exec(function(err, applications) {
-            //   applications.push(newApp);
-            // });
-
-            AppClass.create(newApp, function(err, createdClass){
-                  if(err) {
-                      console.log('Register POST - Did not create class');
-                      console.log(err);
-                      return res.json({ status_code: 500, message : err });
-                  } else {
-                    Scholarship.findOne({_id: newApp.scholarshipId}, function(err, selectedClass) {
-
-                      selectedClass.applications.push(createdClass);
-
-                    });
-                    User.findOne({_id: newApp.userId}, function(err, selectedClass) {
-
-                      selectedClass.applications.push(createdClass);
-
-                    });
-
-                     return res.json({ message : 'Application Registered!' });
-                  }
-            });
-          }
-      })
+    //         newApp._id = mongoose.Types.ObjectId();
+    //         newApp.scholarshipId = req.body.scholarshipId;
+    //         newApp.userId = req.body.userId;
+    //         newApp.appliedAt = req.body.appliedAt;
 
 
+    //         // User.findOne({_id: userId}).populate('applications').exec(function(err, applications) {
+    //         //   applications.push(newApp);
+    //         // });
 
-    });
+    //         // Scholarship.findOne({_id: newApp.scholarshipId}).populate('applications').exec(function(err, applications) {
+    //         //   applications.push(newApp);
+    //         // });
+
+    //         AppClass.create(newApp, function(err, createdClass){
+    //               if(err) {
+    //                   console.log('Register POST - Did not create class');
+    //                   console.log(err);
+    //                   return res.json({ status_code: 500, message : err });
+    //               } else {
+    //                 Scholarship.findOne({_id: newApp.scholarshipId}, function(err, selectedClass) {
+
+    //                   selectedClass.applications.push(createdClass);
+
+    //                 });
+    //                 User.findOne({_id: newApp.userId}, function(err, selectedClass) {
+
+    //                   selectedClass.applications.push(createdClass);
+
+    //                 });
+
+    //                  return res.json({ message : 'Application Registered!' });
+    //               }
+    //         });
+    //       }
+    //   })
+
+
+
+    // });
 
 
     //   router.post('/' + constants.app_prefix + '/' + constants.create_prefix, function(req,res) {
