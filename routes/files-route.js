@@ -4,7 +4,9 @@ module.exports = function(app, router, db, constants) {
     var bcrypt = require('bcrypt-nodejs');
     var jwt = require('jsonwebtoken');
 
-    fs = require('fs');
+    var fs = require('fs');
+    var fsPath = require('fs-path');
+
 
     router.post('/' + constants.forms_uri + '/upload', function (req, res) {
       res.header("Access-Control-Allow-Origin", "*");
@@ -18,10 +20,23 @@ module.exports = function(app, router, db, constants) {
             fos.close();*/
 
             //localhost:8180/forms
-            var completeFileName = "forms/hello.pdf";
+//            var completeFileName = "public/forms/AteneodeManila/FinancialAid/ApplicationForm.pdf";
+            var completeFileName = "public/forms/" + req.body.filePath;
+        //      var completeFileName = "public/forms/AteneodeManila/FinancialAid/122888/ApplicationForm.pdf";
+            //"public/forms/hello.pdf";
 //            var completeFileName = constants.photo_guides_uri + "/" + req.body.fileName;
 
-            fs.writeFile(completeFileName, content, function (err) {
+            fsPath.writeFile(completeFileName, content, function(err){
+              if(err) {
+                res.json({error:400, message:"Photo Upload Error"});
+              } else {
+                console.log("Photo saved");
+                return res.json({ message : "Upload completed!"});
+              }
+            });
+
+
+          /*  fs.writeFile(completeFileName, content, function (err) {
                 if (err) {
                     console.log(err);
                     res.json({error:400, message:"Photo Upload Error"});
@@ -30,7 +45,7 @@ module.exports = function(app, router, db, constants) {
                     return res.json({ message : "Upload completed!"});
                 }
 
-            });
+            });*/
           }
     });
 
